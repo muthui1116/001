@@ -1,0 +1,38 @@
+{% extends 'base.html'%}
+{% load static%}
+{% load crispy_forms_tags%}
+
+{% block content%}
+ <!-- Page Header -->
+  <header class="masthead" style="background-image: url({% static 'assets/img/home-bg.jpg'%})">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>New Post</h1>
+            <span class="subheading">You're going to make a great blog post!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <form method="post" action="">
+          <div class="field">
+            <div class="control">
+              {% csrf_token%}
+              {{ form.media}}
+              {{ form|crispy}}
+              <button class="btn btn-primary float-end" href="{% url 'index'%}">SUBMIT POST</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock%}

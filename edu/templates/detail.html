@@ -1,0 +1,73 @@
+{% extends 'base.html'%}
+{% load static%}
+{% load crispy_forms_tags%}
+{% block content%}
+<!-- Page Header-->
+<header class="masthead" style="background-image: url()">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-heading">
+                    <h1>{{ post.title}}</h1>
+                    <h2 class="subheading">{{ post.subtitle}}</h2>
+                    <span class="meta">Posted by
+              <a href="#">{{ post.author}}</a>
+              on {{ post.date_created|date:'M d, Y'}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="card shadow-sm p-3 mb-5 bg-body rounded" style="border:none;">
+                    <div class="card-body">
+                       <strong> {{ post.subtitle}} </strong> <br>
+                         {{ post.body|safe}}
+                    </div>
+                </div>
+                <h4>Comments</h4>
+                <form action="" class="mb-2" method="post">
+                    {% csrf_token%}
+                    {{ form.media}}
+                    {{ form|crispy}}
+                    <div class="field">
+                        <div class="control">
+                            <button class="btn btn-primary float-start mb-2" href="">SUBMIT POST</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        {% for comment in post.comments.all%}
+                        <div class="card card-comment shadow-sm p-3 mb-2 bg-white rounded" style="max-width: 100%;">
+                            <div class="row row-comment">
+                                <div class=" mb-4">
+                                    <img alt="" class="comment-image "
+                                         src="#">
+                                </div>
+                                <div class="col mb-2">
+                                    <div class="card-body" style="border:none;">
+                                        <strong> {{ comment.name}} </strong>
+                                        <small> {{ comment.date_created|timesince}} ago </small> <br>
+                                        {{ comment.body|safe}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+{% endblock%}
